@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#c8c8c8"
+    tools:context="com.joelcastro.eligetupropiaaventura.activities.LoginActivity$PlaceholderFragment">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="186dp"
+                android:src="@drawable/cyoa"/>
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:hint="@string/usuario"
+                android:inputType="text"
+                android:id="@+id/textUserMain"/>
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="20dp"
+                android:password="true"
+                android:inputType="textPassword"
+                android:hint="@string/password"
+                android:id="@+id/textPassMain"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button1"
+                android:id="@+id/buttonEnterMain"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="right"
+                android:onClick="nextPage"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

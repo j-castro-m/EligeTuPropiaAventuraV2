@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EligeTuPropiaAventura</string>
+    <string name="action_desconectar">Desconectar</string>
+    <string name="title_activity_main_menu">Elige Tu Propia Aventura</string>
+    <string name="title_section1">Menu</string>
+    <string name="title_section2">Revisa tu historia</string>
+    <string name="title_section3">Elige otra aventura</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="button1">Acceder</string>
+    <string name="password">Contraseña</string>
+    <string name="usuario">Usuario</string>
+    <string name="bad_login">Usuario o contraseña equivocados</string>
+    <string name="textSalir">¿Desea cerrar sesión?</string>
+
+    <string-array name="drawer_actions">
+        <item>Elige historia</item>
+        <item>Revisa tu aventura</item>
+        <item>Configuracion</item>
+    </string-array>
+
+    <string name="drawer_open">Abrir Drawer</string>
+    <string name="drawer_close">Cerrar Drawer</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="settings_conf_title">Configuracion app</string>
+    <string name="settings_checkbox_title">Enviar Información</string>
+    <string name="settings_checkbox_text">Esta información nos ayudará a mejorar la apliación</string>
+    <string name="settings_credits_title">Creditos</string>
+    <string name="settings_credits_text">Joel Castro</string>
+    <string name="settings_credits_subtext">Click para más información</string>
+    <string name="settings_credits_url">http://twitter.com/vlad29</string>
+
+
+</resources>
