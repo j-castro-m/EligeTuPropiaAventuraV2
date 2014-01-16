@@ -1,0 +1,56 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.joelcastro.eligetupropiaaventura.fragments.HistoryNodeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/nodeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:text="Titulo" />
+
+    <TextView
+        android:id="@+id/nodeTexto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="20dp"
+        android:text="qwertyuiop` asdfghjkl  zxcvbasdfghj" />
+
+
+    <TextView
+        android:id="@+id/nodeOpcionElegida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="30dp"
+        android:textColor="#ff2328ff"
+        android:text="Opcion elegida" />
+
+        <TextView
+            android:id="@+id/nodeDescripcionOpcionElegida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textColor="#ff76a2d1"
+            android:textSize="20dp"
+            android:text="qwertyuiop` asdfghjkl  zxcvbasdfghj" />
+
+        <Button
+        android:id="@+id/nodeButtonMapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mostrar en mapa"/>
+    </LinearLayout>
+
+</FrameLayout>

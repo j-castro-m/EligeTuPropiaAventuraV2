@@ -52,7 +52,9 @@ public class LoginActivity extends Activity {
                     editor.putString("pass", tpass.getText().toString());
                     editor.commit();
                     Intent intent = new Intent(LoginActivity.this, DrawerMenuActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    finish();
                 }
                 else
                 {

@@ -38,6 +38,8 @@ public class DrawerMenuActivity extends Activity {
     private CharSequence mTitle;
     private String[] mDrawerOptions;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +150,7 @@ public class DrawerMenuActivity extends Activity {
 
 
         FragmentManager fragmentManager = getFragmentManager();
-
+        PreferencesHelper ph = new PreferencesHelper(getBaseContext());
 
         Fragment fragment = new Fragment();
         Bundle args = new Bundle();
@@ -156,13 +158,11 @@ public class DrawerMenuActivity extends Activity {
 
         if(drawerItemSelection==ITEM_DRAWER_SUMMARY_HISTORY){
             fragment = new HistorySummaryFragment();
-            args.putInt(HistorySummaryFragment.ARG_PARAM1, drawerItemSelection);
+            args.putString(HistorySummaryFragment.LAST_HISTORY_ID, ph.GetPreferences("lastHistory"));
             fragment.setArguments(args);
         }
         else if(drawerItemSelection==ITEM_DRAWER_HISTORY_LIST){
             fragment = new HistoryListFragment();
-            args.putInt(HistoryListFragment.DRAWER_ITEM_NUMBER, drawerItemSelection);
-            fragment.setArguments(args);
         }else if(drawerItemSelection==ITEM_DRAWER_SETTINGS){
             fragment = new ConfigurationFragment();
         }
