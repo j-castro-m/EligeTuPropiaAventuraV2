@@ -24,6 +24,7 @@ import com.joelcastro.eligetupropiaaventura.R;
 import com.joelcastro.eligetupropiaaventura.utils.PreferencesHelper;
 import com.joelcastro.eligetupropiaaventura.utils.ServiceHandler;
 
+import org.androidannotations.annotations.EFragment;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -37,6 +38,7 @@ import java.util.List;
 /**
  * Fragment that appears in the "content_frame", shows a planet
  */
+@EFragment
 public class HistoryListFragment extends ListFragment {
     private static final String TAG_USER ="user";
     private static final String TAG_ID ="id";

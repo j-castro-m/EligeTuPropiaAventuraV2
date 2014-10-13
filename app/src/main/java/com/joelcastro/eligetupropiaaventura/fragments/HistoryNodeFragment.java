@@ -18,7 +18,9 @@ import com.joelcastro.eligetupropiaaventura.R;
 import com.joelcastro.eligetupropiaaventura.activities.LoginActivity;
 import com.joelcastro.eligetupropiaaventura.utils.PreferencesHelper;
 
+import org.androidannotations.annotations.EFragment;
 
+@EFragment
 public class HistoryNodeFragment extends Fragment {
 
     private static final String TAG_ID ="id";

@@ -16,10 +16,12 @@ import android.widget.SimpleAdapter;
 import com.joelcastro.eligetupropiaaventura.R;
 import com.joelcastro.eligetupropiaaventura.utils.PreferencesHelper;
 
+import org.androidannotations.annotations.EFragment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+@EFragment
 public class HistorySummaryFragment extends ListFragment {
     public static final String LAST_HISTORY_ID = "idHistoria";
 

@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 
 import com.joelcastro.eligetupropiaaventura.R;
 
+import org.androidannotations.annotations.EFragment;
 
 
+@EFragment
 public class ConfigurationFragment extends PreferenceFragment {
 
     @Override
