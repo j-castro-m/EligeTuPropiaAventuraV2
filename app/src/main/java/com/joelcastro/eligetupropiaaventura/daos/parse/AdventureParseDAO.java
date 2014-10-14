@@ -36,7 +36,30 @@ public class AdventureParseDAO implements AdventureDAO{
     }
 
     @Override
-    public List<Adventure> getAdventureFromPlayer(String idPlayer) {
+    public Adventure getAdventureFromName(String adventureName) {
+
+        Adventure adventure = new Adventure();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Adventures");
+        query.whereEqualTo("name", adventureName);
+        try {
+            for (ParseObject parseObject : query.find()) {
+                adventure.setNombre(parseObject.getString("nombre"));
+                adventure.setDescripcion(parseObject.getString("descripcion"));
+                adventure.setIdNodoInicial(parseObject.getInt("idnodoinicial"));
+                adventure.setIdNodoActual(parseObject.getInt("idnodoactual"));
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return adventure;
+
+    }
+
+    @Override
+    public List<Adventure> getAdventureListFromPlayer(String idPlayer) {
 
         List<Adventure> adventuresList = new ArrayList<Adventure>();
 

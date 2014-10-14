@@ -13,6 +13,7 @@ public class AdventureNode implements Serializable{
     private int SiguienteNodoId1;
     private int SiguienteNodoId2;
 
+    public AdventureNode(){};
     public AdventureNode(int id, String texto, String GPS, String titulo, int siguienteNodoId1, int siguienteNodoId2) {
         this.id = id;
         this.texto = texto;

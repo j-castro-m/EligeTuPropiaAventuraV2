@@ -26,8 +26,21 @@ public class AdventureFakeDAO implements AdventureDAO{
         return adventuresList;
     }
 
+
     @Override
-    public List<Adventure> getAdventureFromPlayer(String idPlayer) {
+    public Adventure getAdventureFromName(String adventureName) {
+        if(adventureName.equals("Aventura de prueba inicial del sistema")){
+            return new Adventure("Aventura Inicial","Aventura de prueba inicial del sistema",1,6);
+        }else if(adventureName.equals("Aventura de prueba inicial del sistema 2")){
+            return new Adventure("Aventura Inicial 2","Aventura de prueba inicial del sistema 2",2,8);
+        }else if(adventureName.equals("Aventura de prueba inicial del sistema 3")){
+            return new Adventure("Aventura Inicial 3","Aventura de prueba inicial del sistema 3",3,10);
+        }
+        return new Adventure("Aventura Inicial 3","Aventura de prueba inicial del sistema 3",3,10);
+    }
+
+    @Override
+    public List<Adventure> getAdventureListFromPlayer(String idPlayer) {
         List<Adventure> adventuresList = new ArrayList<Adventure>();
         adventuresList.add(new Adventure("Aventura Inicial","Aventura de prueba inicial del sistema",1,6));
         adventuresList.add(new Adventure("Aventura Inicial 2","Aventura de prueba inicial del sistema 2",2,8));

@@ -21,7 +21,7 @@ import org.androidannotations.annotations.EFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@EFragment
+@EFragment(R.layout.fragment_list)
 public class HistorySummaryFragment extends ListFragment {
     public static final String LAST_HISTORY_ID = "idHistoria";
 
@@ -53,7 +53,7 @@ public class HistorySummaryFragment extends ListFragment {
         }
     }
 
-    @Override
+   @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

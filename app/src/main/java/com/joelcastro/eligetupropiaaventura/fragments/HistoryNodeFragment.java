@@ -20,7 +20,7 @@ import com.joelcastro.eligetupropiaaventura.utils.PreferencesHelper;
 
 import org.androidannotations.annotations.EFragment;
 
-@EFragment
+@EFragment(R.layout.fragment_history_node)
 public class HistoryNodeFragment extends Fragment {
 
     private static final String TAG_ID ="id";
@@ -39,6 +39,10 @@ public class HistoryNodeFragment extends Fragment {
     public static final String ARG_ID = "idHistoria";
     private String idHistoria;
 
+    public HistoryNodeFragment() {
+        // Required empty public constructor
+    }
+
     public static HistoryNodeFragment newInstance(String param1) {
         HistoryNodeFragment fragment = new HistoryNodeFragment();
         Bundle args = new Bundle();
@@ -55,10 +59,6 @@ public class HistoryNodeFragment extends Fragment {
             idHistoria = getArguments().getString(ARG_ID);
         }
     }
-    public HistoryNodeFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

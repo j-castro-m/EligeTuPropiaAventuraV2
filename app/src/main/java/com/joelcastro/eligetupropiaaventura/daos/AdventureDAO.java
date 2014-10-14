@@ -10,7 +10,8 @@ import java.util.List;
 public interface AdventureDAO {
 
     public List<Adventure> getAllAdventures();
-    public List<Adventure> getAdventureFromPlayer(String idPlayer);
+    public List<Adventure> getAdventureListFromPlayer(String idPlayer);
+    public Adventure getAdventureFromName(String adventureName);
     public String addAdventure(Adventure adventure);
     public void editAdventure(Adventure adventure);
 }
