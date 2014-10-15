@@ -8,6 +8,7 @@ import com.joelcastro.eligetupropiaaventura.daos.AdventureHistoryDAO;
 import com.joelcastro.eligetupropiaaventura.models.AdventureNode;
 
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Created by joel on 15/10/14.
  */
+@EBean
 public class AdventureHistorySQLiteDAO implements AdventureHistoryDAO {
     AdventureSQLiteOpenHelper openHelper;
     AdventureNodeSQLiteDAO nodeDAO;

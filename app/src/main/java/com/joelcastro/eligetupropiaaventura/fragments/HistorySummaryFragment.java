@@ -1,10 +1,7 @@
 package com.joelcastro.eligetupropiaaventura.fragments;
 
-import android.app.Activity;
 import android.app.ListFragment;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,24 +11,43 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.joelcastro.eligetupropiaaventura.R;
-import com.joelcastro.eligetupropiaaventura.utils.PreferencesHelper;
+import com.joelcastro.eligetupropiaaventura.daos.AdventureDAO;
+import com.joelcastro.eligetupropiaaventura.daos.AdventureHistoryDAO;
+import com.joelcastro.eligetupropiaaventura.daos.DAOFactory;
+import com.joelcastro.eligetupropiaaventura.models.AdventureNode;
+import com.joelcastro.eligetupropiaaventura.utils.ArrayAdapterAdventureList;
+import com.joelcastro.eligetupropiaaventura.utils.MyPrefs_;
 
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 
 @EFragment(R.layout.fragment_list)
 public class HistorySummaryFragment extends ListFragment {
     public static final String LAST_HISTORY_ID = "idHistoria";
-
     private static final String TAG_TEXTO="textoHistorico";
     private static final String TAG_OPCION="opcionElegida";
 
     private String idHistoria;
 
+    @Pref
+    MyPrefs_ myPrefs;
 
+    @Bean
+    DAOFactory daoFactory;
+    AdventureHistoryDAO adventureHistoryDAO;
 
+    @AfterInject
+    void initDAO(){
+        adventureHistoryDAO = daoFactory.getAdventureHistoryDAO();
+    }
 
     public static HistorySummaryFragment newInstance(String param1) {
 
@@ -64,15 +80,26 @@ public class HistorySummaryFragment extends ListFragment {
     public void onViewCreated (View rootView,
                                Bundle savedInstanceState){
         ListView lv = getListView();
-        PreferencesHelper ph = new PreferencesHelper(rootView.getContext());
+        //PreferencesHelperBK ph = new PreferencesHelperBK(rootView.getContext());
         ArrayList<HashMap<String, String>> summaryList = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> summaryListadoHash = new HashMap<String, String>();
+        HashMap<String, String> summaryListadoHash;
         int i = 1;
-        while((ph.GetPreferences(idHistoria+TAG_OPCION+i)=="")){
-            summaryListadoHash.put(TAG_TEXTO,ph.GetPreferences(idHistoria+TAG_TEXTO+i));
-            summaryListadoHash.put(TAG_OPCION,ph.GetPreferences(idHistoria+TAG_OPCION+i));
-            summaryList.add(summaryListadoHash);
-            Log.d("LISTA",summaryList.toString());
+
+        List<AdventureNode> lista = adventureHistoryDAO.getNodesFromAdventure(myPrefs.user().get(),myPrefs.adventureName().get());
+
+        if(lista.size()>1) {
+            ListIterator<AdventureNode> listIterator = lista.listIterator();
+            ListIterator<AdventureNode> listIteratorForNextNode = lista.listIterator(1);
+            Log.d("LISTA", lista.toString());
+
+
+            for (int iteratorList = 0; iteratorList < lista.size() - 1; iteratorList++) {
+                summaryListadoHash = new HashMap<String, String>();
+                summaryListadoHash.put(TAG_TEXTO, lista.get(iteratorList).getTexto());
+                summaryListadoHash.put(TAG_OPCION, lista.get(iteratorList + 1).getTitulo());
+                summaryList.add(summaryListadoHash);
+                Log.d("HASH", summaryListadoHash.toString());
+            }
         }
 
         ListAdapter adapter = new SimpleAdapter(

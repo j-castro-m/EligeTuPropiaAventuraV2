@@ -7,9 +7,12 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.androidannotations.annotations.EBean;
+
 /**
  * Created by joel on 14/10/14.
  */
+@EBean
 public class AdventureNodeParseDAO implements AdventureNodeDAO {
     @Override
     public AdventureNode getNodeFromId(int idNode) {

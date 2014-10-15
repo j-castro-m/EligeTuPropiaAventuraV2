@@ -10,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joelcastro.eligetupropiaaventura.R;
@@ -21,7 +20,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.NoTitle;
-import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
@@ -42,18 +40,6 @@ public class LoginActivity extends Activity {
         tpass.setText(myPrefs.pass().get());
     }
 
-    @TextChange({R.id.textUserMain,R.id.textPassMain})
-    void onUserTextChange(TextView tv, CharSequence text) {
-        if((tpass.getText().length()>0)&&(tusuario.getText().length()>0))
-        {
-            button.setEnabled(true);
-        }
-        else
-        {
-            button.setEnabled(false);
-        }
-
-    }
 
     @Click(value = R.id.buttonEnterMain)
     void doButtonEnter() {

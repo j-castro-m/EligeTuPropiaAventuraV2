@@ -21,10 +21,21 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.joelcastro.eligetupropiaaventura.R;
-import com.joelcastro.eligetupropiaaventura.utils.PreferencesHelper;
+import com.joelcastro.eligetupropiaaventura.daos.AdventureDAO;
+import com.joelcastro.eligetupropiaaventura.daos.DAOFactory;
+import com.joelcastro.eligetupropiaaventura.utils.ArrayAdapterAdventureList;
+import com.joelcastro.eligetupropiaaventura.utils.MyPrefs;
+import com.joelcastro.eligetupropiaaventura.utils.MyPrefs_;
 import com.joelcastro.eligetupropiaaventura.utils.ServiceHandler;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.ViewById;
+
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -61,6 +72,62 @@ public class HistoryListFragment extends ListFragment {
     private static String url = "https://raw2.github.com/vlad29/vlad29.github.io/master/cyoagps.json";
     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
+    public HistoryListFragment() {
+        // Empty constructor required for fragment subclasses
+    }
+
+    @Pref
+    MyPrefs_ myPrefs;
+
+    @Bean
+    DAOFactory daoFactory;
+    AdventureDAO adventureDAO;
+    ArrayAdapterAdventureList adapter;
+
+    @AfterInject
+    void initDAO(){
+        adventureDAO = daoFactory.getAdventureDAO();
+    }
+
+    @AfterViews
+    void fillAdapterList(){
+        adapter = new ArrayAdapterAdventureList(getView().getContext(), R.layout.history_list_item,R.id.historiaItemTitulo, adventureDAO.getAdventureListFromPlayer(myPrefs.user().get()));
+        this.setListAdapter(adapter);
+    }
+
+    @Override
+    public void onViewCreated (View rootView,
+                               Bundle savedInstanceState) {
+        ListView lv = getListView();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String idHistoria = adventureDAO.getAllAdventures().get(position).getNombre();
+                myPrefs.adventureName().put(idHistoria);
+                HistoryNodeFragment fragment = new HistoryNodeFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                args.putString(HistoryNodeFragment.ARG_ID, idHistoria);
+                fragment.setArguments(args);
+                transaction.replace(R.id.content_frame, fragment);
+                transaction.commit();
+
+
+            }
+        });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        return rootView;
+    }
+}
+     /*
+
     // contacts JSONArray
     JSONArray items = null;
     // Hashmap for ListView
@@ -87,8 +154,8 @@ public class HistoryListFragment extends ListFragment {
 
 
 
-        PreferencesHelper ph = new PreferencesHelper(rootView.getContext());
-        nameValuePairs.add(new BasicNameValuePair("usuario", ph.GetPreferences("usuario")));
+        //PreferencesHelperBK ph = new PreferencesHelperBK(rootView.getContext());
+        //nameValuePairs.add(new BasicNameValuePair("usuario", ph.GetPreferences("usuario")));
 
 
         historyList = new ArrayList<HashMap<String, String>>();
@@ -99,10 +166,10 @@ public class HistoryListFragment extends ListFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
             int position, long id) {
-                PreferencesHelper ph = new PreferencesHelper(view.getContext());
+               // PreferencesHelperBK ph = new PreferencesHelperBK(view.getContext());
             // getting values from selected ListItem
             String idHistoria = ((TextView) view.findViewById(R.id.historiaItemID)).getText().toString();
-                ph.SavePreferences("lastHistory",idHistoria);
+               // ph.SavePreferences("lastHistory",idHistoria);
                 HistoryNodeFragment fragment = new HistoryNodeFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 Bundle args = new Bundle();
@@ -150,7 +217,7 @@ private class GetData extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... arg0) {
         // Creating service handler class instance
         ServiceHandler sh = new ServiceHandler();
-        PreferencesHelper ph = new PreferencesHelper(context);
+       // PreferencesHelperBK ph = new PreferencesHelperBK(context);
         // Making a request to url and getting response
         String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET,nameValuePairs);
 
@@ -183,8 +250,8 @@ private class GetData extends AsyncTask<Void, Void, Void> {
                     JSONArray summaryJSON = c.getJSONArray(TAG_SUMMARY);
                     for (int j = 1; j <= items.length(); j++) {
                        JSONObject itemHistorico = summaryJSON.getJSONObject(j-1);
-                        ph.SavePreferences(historiaId+TAG_SUMMARY_TEXT+j,itemHistorico.getString(TAG_SUMMARY_TEXT));
-                        ph.SavePreferences(historiaId+TAG_SUMMARY_OPTION+j,itemHistorico.getString(TAG_SUMMARY_OPTION));
+                        //ph.SavePreferences(historiaId+TAG_SUMMARY_TEXT+j,itemHistorico.getString(TAG_SUMMARY_TEXT));
+                        //ph.SavePreferences(historiaId+TAG_SUMMARY_OPTION+j,itemHistorico.getString(TAG_SUMMARY_OPTION));
                     }
 
 
@@ -193,7 +260,7 @@ private class GetData extends AsyncTask<Void, Void, Void> {
                     historiaListadoHash.put(TAG_TITULO, historiaTitulo);
 
 
-                    ph.SavePreferences(historiaId+TAG_ID,historiaId);
+                 ph.SavePreferences(historiaId+TAG_ID,historiaId);
                     ph.SavePreferences(historiaId+TAG_TITULO,historiaTitulo);
                     ph.SavePreferences(historiaId+TAG_TEXTO,historiaTexto);
                     ph.SavePreferences(historiaId+TAG_OPCION1NAME,historiaOpcion1Name);
@@ -206,10 +273,10 @@ private class GetData extends AsyncTask<Void, Void, Void> {
 
 
                     // adding contact to contact list
-                    historyList.add(historiaListadoHash);
-                    if(ph.GetPreferences("lastHistoriId")==""){
+                    historyList.add(historiaListadoHash);*/
+                   /* if(ph.GetPreferences("lastHistoriId")==""){
                         ph.SavePreferences("lastHistoryId",historiaId);
-                    }
+                    }*//*
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -227,9 +294,7 @@ private class GetData extends AsyncTask<Void, Void, Void> {
         // Dismiss the progress dialog
         if (pDialog.isShowing())
             pDialog.dismiss();
-        /**
-         * Updating parsed JSON data into ListView
-         * */
+
         ListAdapter adapter = new SimpleAdapter(
                 context, historyList,
                 R.layout.history_list_item,
@@ -246,3 +311,4 @@ private class GetData extends AsyncTask<Void, Void, Void> {
 }
 
 }
+*/

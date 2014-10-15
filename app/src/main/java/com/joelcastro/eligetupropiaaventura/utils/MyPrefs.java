@@ -17,5 +17,7 @@ public interface MyPrefs {
     @DefaultString("")
     String pass();
 
-
+    // The field age will have default value 42
+    @DefaultString("")
+    String adventureName();
 }

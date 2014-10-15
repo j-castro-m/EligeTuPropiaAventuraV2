@@ -4,9 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.androidannotations.annotations.EBean;
+
 /**
  * Created by joel on 15/10/14.
  */
+@EBean
 public class AdventureSQLiteOpenHelper extends SQLiteOpenHelper {
 
 
@@ -25,31 +28,30 @@ public class AdventureSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE "+NODES_TABLE_NAME+"(id INT, texto TEXT,gps TEXT,titulo TEXT,idsiguiente1 INT,idsiguiente2 INT)");
-        db.execSQL("CREATE TABLE "+ADVENTURES_TABLE_NAME+"(id_material TEXT, id_deposito TEXT)");
+        db.execSQL("CREATE TABLE "+ADVENTURES_TABLE_NAME+"(adventurename TEXT, description TEXT, firstnode INT, actualnode INT)");
         db.execSQL("CREATE TABLE "+HISTORY_TABLE_NAME+"(adventurename TEXT, player TEXT, idnode INT)");
-        db.execSQL("CREATE TABLE "+ADVENTURES_AND_PLAYER_TABLE_NAME+"(id_deposito TEXT,"
-                +" id_ecoparque TEXT,"
-                +" depositanteid TEXT,"
-                +" fecha TEXT,"
-                +" peso TEXT,"
-                +" company BOOLEAN,"
-                +" nombre TEXT,"
-                +" sector TEXT,"
-                +" telefono TEXT,"
-                +" email TEXT,"
-                +" web TEXT"
-                +")");
+        db.execSQL("CREATE TABLE "+ADVENTURES_AND_PLAYER_TABLE_NAME+"(adventurename TEXT,player TEXT)");
 
 
-        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES ('1', 'Material informático')");
-        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES ('2', 'Neveras')");
-        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES ('3', 'Aceites usados')");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (1, 'texto','titulo','GPS',4,5)");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (4, 'texto 4','titulo 4','GPS',1,5)");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (5, 'texto 5','titulo 5','GPS',4,1)");
 
-        db.execSQL("INSERT INTO "+ADVENTURES_TABLE_NAME+" VALUES ('1','San Jose - Las Fuentes','http://www.restauranteateneo.es/sites/all/themes/ateneo/images/bus.png')");
-        db.execSQL("INSERT INTO "+ADVENTURES_TABLE_NAME+" VALUES ('2','Cogullada','http://www.restauranteateneo.es/sites/all/themes/ateneo/images/bus.png')");
-        db.execSQL("INSERT INTO "+ADVENTURES_TABLE_NAME+" VALUES ('3','Universidad - Delicias','http://www.restauranteateneo.es/sites/all/themes/ateneo/images/bus.png')");
-        db.execSQL("INSERT INTO "+ADVENTURES_TABLE_NAME+" VALUES ('4','Valdespartera','http://www.restauranteateneo.es/sites/all/themes/ateneo/images/bus.png')");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (2, 'texto','titulo','GPS',6,7)");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (6, 'texto 6','titulo 6','GPS',2,7)");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (7, 'texto 7','titulo 7','GPS',6,2)");
 
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (3, 'texto','titulo','GPS',8,9)");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (8, 'texto 8','titulo 8','GPS',3,9)");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (9, 'texto 9','titulo 9','GPS',8,3)");
+
+        db.execSQL("INSERT INTO "+ADVENTURES_TABLE_NAME+" VALUES ('Aventura Inicial','Aventura de prueba inicial del sistema',1,1)");
+        db.execSQL("INSERT INTO "+ADVENTURES_TABLE_NAME+" VALUES ('Aventura Inicial 2','Aventura de prueba inicial del sistema 2',2,2)");
+        db.execSQL("INSERT INTO "+ADVENTURES_TABLE_NAME+" VALUES ('Aventura Inicial 3','Aventura de prueba inicial del sistema 3',3,3)");
+
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES ('Aventura Inicial','user')");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES ('Aventura Inicial 2','user')");
+        db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES ('Aventura Inicial 3','user')");
 
     }
 

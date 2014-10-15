@@ -53,22 +53,22 @@ public class DAOFactory {
 
     AdventureDAO adventureDAOSelected;
     AdventureNodeDAO adventureNodeDAOSelected;
-    AdventureHistoryDAO adventureHistoryDAO;
+    AdventureHistoryDAO adventureHistoryDAOSelected;
 
     @AfterInject
     void initDAOs(){
         if (SELECTED == FAKE_DAO){
             adventureDAOSelected = adventureFakeDAO;
             adventureNodeDAOSelected = adventureNodeFakeDAO;
-            adventureHistoryDAO = adventureHistoryFakeDAO;
+            adventureHistoryDAOSelected = adventureHistoryFakeDAO;
         } else if(SELECTED == SQLITEDAO){
             adventureDAOSelected = adventureSQLiteDAO;
             adventureNodeDAOSelected = adventureNodeSQLiteDAO;
-            adventureHistoryDAO = adventureHistorySQLiteDAO;
+            adventureHistoryDAOSelected = adventureHistorySQLiteDAO;
         }else if(SELECTED == PARSEDAO){
             adventureDAOSelected = adventureParseDAO;
             adventureNodeDAOSelected = adventureNodeParseDAO;
-            adventureHistoryDAO = adventureHistoryParseDAO;
+            adventureHistoryDAOSelected = adventureHistoryParseDAO;
         }
     }
 
@@ -77,6 +77,9 @@ public class DAOFactory {
     }
     public AdventureNodeDAO getAdventureNodeDAO(){
         return adventureNodeDAOSelected;
+    }
+    public AdventureHistoryDAO getAdventureHistoryDAO(){
+        return adventureHistoryDAOSelected;
     }
 
 

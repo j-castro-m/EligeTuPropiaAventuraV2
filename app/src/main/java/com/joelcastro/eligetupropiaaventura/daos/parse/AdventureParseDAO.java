@@ -6,12 +6,15 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.androidannotations.annotations.EBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by joel on 12/10/14.
  */
+@EBean
 public class AdventureParseDAO implements AdventureDAO{
     @Override
     public List<Adventure> getAllAdventures() {

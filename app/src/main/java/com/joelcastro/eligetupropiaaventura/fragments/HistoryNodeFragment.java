@@ -1,13 +1,11 @@
 package com.joelcastro.eligetupropiaaventura.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.joelcastro.eligetupropiaaventura.R;
-import com.joelcastro.eligetupropiaaventura.activities.LoginActivity;
-import com.joelcastro.eligetupropiaaventura.utils.PreferencesHelper;
+
 
 import org.androidannotations.annotations.EFragment;
 
@@ -70,7 +67,7 @@ public class HistoryNodeFragment extends Fragment {
     @Override
     public void onViewCreated (View rootView,
                                Bundle savedInstanceState){
-        final PreferencesHelper ph = new PreferencesHelper(rootView.getContext());
+        //final PreferencesHelperBK ph = new PreferencesHelperBK(rootView.getContext());
         final TextView title = (TextView) rootView.findViewById(R.id.nodeTitle);
         final TextView text = (TextView) rootView.findViewById(R.id.nodeTexto);
         final TextView selectedOption = (TextView) rootView.findViewById(R.id.nodeOpcionElegida);
@@ -78,7 +75,7 @@ public class HistoryNodeFragment extends Fragment {
         final Button getMapa = (Button) rootView.findViewById(R.id.nodeButtonMapa);
 
 
-
+/*
         final String historyTitle = ph.GetPreferences(idHistoria+TAG_TITULO);
         final String historyTexto = ph.GetPreferences(idHistoria+TAG_TEXTO);
         final String historyOpcion1Name = ph.GetPreferences(idHistoria+TAG_OPCION1NAME);
@@ -118,21 +115,21 @@ public class HistoryNodeFragment extends Fragment {
             alert.show();
 
         }
-
+*/
 
         getMapa.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String position[] = ph.GetPreferences(idHistoria + TAG_OPCION_ELEGIDAGPS).split(",");
+                String position[] = null;//ph.GetPreferences(idHistoria + TAG_OPCION_ELEGIDAGPS).split(",");
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                         Uri.parse("geo:0,0?q=" + position[0] + "," + position[1]));
                 startActivity(intent);
             }
         });
 
-        title.setText(historyTitle);
-        text.setText(historyTexto);
-        selectedOption.setText(ph.GetPreferences(idHistoria+TAG_OPCION_ELEGIDA));
-        selectedOptionDescription.setText(ph.GetPreferences(idHistoria + TAG_OPCION_ELEGIDADESCRIPCION));
+        title.setText("Titulo Historia");//title.setText(historyTitle);
+        text.setText("Texto Historia");//text.setText(historyTexto);
+        //selectedOption.setText(ph.GetPreferences(idHistoria+TAG_OPCION_ELEGIDA));
+        //selectedOptionDescription.setText(ph.GetPreferences(idHistoria + TAG_OPCION_ELEGIDADESCRIPCION));
 
     }
 

@@ -12,6 +12,6 @@ import org.androidannotations.annotations.EBean;
 public class AdventureNodeFakeDAO implements AdventureNodeDAO {
     @Override
     public AdventureNode getNodeFromId(int idNode) {
-        return new AdventureNode(idNode,"Fake Text String","0.6666,0.88888","Fake Title",idNode+1,idNode+2);
+        return new AdventureNode(idNode,"Fake Text String for node "+idNode,"0.6666,0.88888","Node"+idNode+" Title",idNode+1,idNode+2);
     }
 }

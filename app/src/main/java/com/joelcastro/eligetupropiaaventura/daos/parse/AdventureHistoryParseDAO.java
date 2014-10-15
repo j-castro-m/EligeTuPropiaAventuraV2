@@ -8,12 +8,15 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.androidannotations.annotations.EBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by joel on 14/10/14.
  */
+@EBean
 public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
     @Override
     public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure) {
