@@ -1,5 +1,7 @@
 package com.joelcastro.eligetupropiaaventura.daos.fake;
 
+import android.util.Log;
+
 import com.joelcastro.eligetupropiaaventura.daos.AdventureDAO;
 import com.joelcastro.eligetupropiaaventura.models.Adventure;
 
@@ -37,6 +39,11 @@ public class AdventureFakeDAO implements AdventureDAO{
             return new Adventure("Aventura Inicial 3","Aventura de prueba inicial del sistema 3",3,10);
         }
         return new Adventure("Aventura Inicial 3","Aventura de prueba inicial del sistema 3",3,10);
+    }
+
+    @Override
+    public void delAdventureFromPlayer(String adventureName) {
+            Log.d("FAKE DAO","DELETE ADVENTURE FROM PLAYER -> "+adventureName);
     }
 
     @Override

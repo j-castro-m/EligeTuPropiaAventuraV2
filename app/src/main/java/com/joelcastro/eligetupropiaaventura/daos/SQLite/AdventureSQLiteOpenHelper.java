@@ -17,6 +17,7 @@ public class AdventureSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String ADVENTURES_TABLE_NAME = "adventures";
     public static final String HISTORY_TABLE_NAME = "history";
     public static final String ADVENTURES_AND_PLAYER_TABLE_NAME = "adventuresplayer";
+    public static final String USER_TABLE_NAME = "users";
 
     // Crear constantes con los nombres de las columnas
 
@@ -31,7 +32,10 @@ public class AdventureSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE "+ADVENTURES_TABLE_NAME+"(adventurename TEXT, description TEXT, firstnode INT, actualnode INT)");
         db.execSQL("CREATE TABLE "+HISTORY_TABLE_NAME+"(adventurename TEXT, player TEXT, idnode INT)");
         db.execSQL("CREATE TABLE "+ADVENTURES_AND_PLAYER_TABLE_NAME+"(adventurename TEXT,player TEXT)");
+        db.execSQL("CREATE TABLE "+USER_TABLE_NAME+"(user TEXT, password TEXT)");
 
+
+        db.execSQL("INSERT INTO "+USER_TABLE_NAME+" VALUES ('user','pass')");
 
         db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (1, 'texto','titulo','GPS',4,5)");
         db.execSQL("INSERT INTO "+NODES_TABLE_NAME+" VALUES (4, 'texto 4','titulo 4','GPS',1,5)");

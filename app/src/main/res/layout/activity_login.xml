@@ -23,7 +23,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="186dp"
+                android:layout_height="106dp"
                 android:src="@drawable/cyoa"/>
             <EditText
                 android:layout_height="wrap_content"
@@ -48,7 +48,23 @@
                 android:layout_marginTop="40dp"
                 android:layout_gravity="right"
                 android:onClick="nextPage"/>
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="20dp"
+                android:password="true"
+                android:inputType="textPassword"
+                android:hint="Nueva Contraseña"
+                android:id="@+id/textPassNew"/>
 
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Cambiar Contraseña"
+                android:id="@+id/buttonChangePass"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="right"
+                android:onClick="changePass"/>
 
 
         </LinearLayout>

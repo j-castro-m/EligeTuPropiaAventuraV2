@@ -79,6 +79,17 @@ public class AdventureSQLiteDAO implements AdventureDAO {
         return adventure;
     }
 
+    @Override
+    public void delAdventureFromPlayer(String adventureName) {
+        SQLiteDatabase db = openHelper.getReadableDatabase();
+        try{
+            db.execSQL("DELETE FROM "+AdventureSQLiteOpenHelper.ADVENTURES_AND_PLAYER_TABLE_NAME+" WHERE adventurename='"+adventureName+"'");
+        }catch(Exception ex){
+
+        }
+
+    }
+
     protected Adventure buildAdventureFromCursor(Cursor query) {
         Adventure adventure = new Adventure();
 

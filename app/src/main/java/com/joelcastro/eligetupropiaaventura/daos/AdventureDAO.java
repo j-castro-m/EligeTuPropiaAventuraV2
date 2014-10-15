@@ -12,6 +12,6 @@ public interface AdventureDAO {
     public List<Adventure> getAllAdventures();
     public List<Adventure> getAdventureListFromPlayer(String idPlayer);
     public Adventure getAdventureFromName(String adventureName);
-    //public String addAdventure(Adventure adventure);
+    public void delAdventureFromPlayer(String adventureName);
     //public void editAdventure(Adventure adventure);
 }

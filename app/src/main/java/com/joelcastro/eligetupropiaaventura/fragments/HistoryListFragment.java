@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -71,6 +72,7 @@ public class HistoryListFragment extends ListFragment {
     private ProgressDialog pDialog;
     private static String url = "https://raw2.github.com/vlad29/vlad29.github.io/master/cyoagps.json";
     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+    public float init_x;
 
     public HistoryListFragment() {
         // Empty constructor required for fragment subclasses
@@ -117,6 +119,26 @@ public class HistoryListFragment extends ListFragment {
 
             }
         });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public  boolean onItemLongClick(AdapterView<?> parent, View view,
+            int position, long id) {
+                adventureDAO.delAdventureFromPlayer(adventureDAO.getAllAdventures().get(position).getNombre());
+                String idHistoria = adventureDAO.getAllAdventures().get(0).getNombre();
+                myPrefs.adventureName().put(idHistoria);
+                HistoryListFragment fragment = new HistoryListFragment_();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                Bundle args = new Bundle();
+                transaction.replace(R.id.content_frame, fragment);
+                transaction.commit();
+
+                return true;
+            }
+        });
+
+
     }
 
     @Override
