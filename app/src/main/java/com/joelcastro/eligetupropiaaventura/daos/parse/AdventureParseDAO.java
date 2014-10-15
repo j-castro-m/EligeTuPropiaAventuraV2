@@ -83,13 +83,5 @@ public class AdventureParseDAO implements AdventureDAO{
 
     }
 
-    @Override
-    public String addAdventure(Adventure adventure) {
-        return null;
-    }
 
-    @Override
-    public void editAdventure(Adventure adventure) {
-
-    }
 }

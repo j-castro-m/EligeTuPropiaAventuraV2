@@ -1,9 +1,14 @@
 package com.joelcastro.eligetupropiaaventura.daos;
 
+import com.joelcastro.eligetupropiaaventura.daos.SQLite.AdventureHistorySQLiteDAO;
 import com.joelcastro.eligetupropiaaventura.daos.SQLite.AdventureNodeSQLiteDAO;
 import com.joelcastro.eligetupropiaaventura.daos.SQLite.AdventureSQLiteDAO;
 import com.joelcastro.eligetupropiaaventura.daos.fake.AdventureFakeDAO;
+import com.joelcastro.eligetupropiaaventura.daos.fake.AdventureHistoryFakeDAO;
 import com.joelcastro.eligetupropiaaventura.daos.fake.AdventureNodeFakeDAO;
+import com.joelcastro.eligetupropiaaventura.daos.parse.AdventureHistoryParseDAO;
+import com.joelcastro.eligetupropiaaventura.daos.parse.AdventureNodeParseDAO;
+import com.joelcastro.eligetupropiaaventura.daos.parse.AdventureParseDAO;
 import com.joelcastro.eligetupropiaaventura.models.AdventureNode;
 
 import org.androidannotations.annotations.AfterInject;
@@ -20,7 +25,7 @@ public class DAOFactory {
 
     static int FAKE_DAO = 1;
     static int SQLITEDAO = 2;
-    //static int PARSEDAO = 3;
+    static int PARSEDAO = 3;
 
     int SELECTED = FAKE_DAO;
 
@@ -28,32 +33,43 @@ public class DAOFactory {
     AdventureFakeDAO adventureFakeDAO;
     @Bean
     AdventureNodeFakeDAO adventureNodeFakeDAO;
+    @Bean
+    AdventureHistoryFakeDAO adventureHistoryFakeDAO;
 
 
     @Bean
     AdventureSQLiteDAO adventureSQLiteDAO;
     @Bean
     AdventureNodeSQLiteDAO adventureNodeSQLiteDAO;
+    @Bean
+    AdventureHistorySQLiteDAO adventureHistorySQLiteDAO;
 
-
+    @Bean
+    AdventureParseDAO adventureParseDAO;
+    @Bean
+    AdventureNodeParseDAO adventureNodeParseDAO;
+    @Bean
+    AdventureHistoryParseDAO adventureHistoryParseDAO;
 
     AdventureDAO adventureDAOSelected;
     AdventureNodeDAO adventureNodeDAOSelected;
+    AdventureHistoryDAO adventureHistoryDAO;
 
     @AfterInject
     void initDAOs(){
         if (SELECTED == FAKE_DAO){
             adventureDAOSelected = adventureFakeDAO;
             adventureNodeDAOSelected = adventureNodeFakeDAO;
+            adventureHistoryDAO = adventureHistoryFakeDAO;
         } else if(SELECTED == SQLITEDAO){
             adventureDAOSelected = adventureSQLiteDAO;
             adventureNodeDAOSelected = adventureNodeSQLiteDAO;
-        }/*else if(SELECTED == PARSEDAO){
-            materialesDAOSelected = materialesParseDAO;
-            ecoParqueDAOSelected = ecoParqueParseDAO;
-            depositoDAOSelected = depositoParseDAO;
-            depositoMaterialDAOSelected = depositoMaterialParseDAO;
-        }*/
+            adventureHistoryDAO = adventureHistorySQLiteDAO;
+        }else if(SELECTED == PARSEDAO){
+            adventureDAOSelected = adventureParseDAO;
+            adventureNodeDAOSelected = adventureNodeParseDAO;
+            adventureHistoryDAO = adventureHistoryParseDAO;
+        }
     }
 
     public AdventureDAO getAdventureDAO(){

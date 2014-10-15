@@ -48,13 +48,4 @@ public class AdventureFakeDAO implements AdventureDAO{
         return adventuresList;
     }
 
-    @Override
-    public String addAdventure(Adventure adventure) {
-        return adventure.getNombre();
-    }
-
-    @Override
-    public void editAdventure(Adventure adventure) {
-
-    }
 }

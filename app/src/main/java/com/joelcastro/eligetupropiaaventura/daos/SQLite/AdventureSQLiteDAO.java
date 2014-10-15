@@ -18,17 +18,14 @@ public class AdventureSQLiteDAO implements AdventureDAO {
     }
 
     @Override
-    public List<Adventure> getAdventureFromPlayer(String idPlayer) {
+    public List<Adventure> getAdventureListFromPlayer(String idPlayer) {
         return null;
     }
 
     @Override
-    public String addAdventure(Adventure adventure) {
+    public Adventure getAdventureFromName(String adventureName) {
         return null;
     }
 
-    @Override
-    public void editAdventure(Adventure adventure) {
 
-    }
 }

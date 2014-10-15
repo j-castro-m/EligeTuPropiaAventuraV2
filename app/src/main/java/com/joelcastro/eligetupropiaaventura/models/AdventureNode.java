@@ -10,8 +10,8 @@ public class AdventureNode implements Serializable{
     private String texto;
     private String GPS;
     private String titulo;
-    private int SiguienteNodoId1;
-    private int SiguienteNodoId2;
+    private int siguienteNodoId1;
+    private int siguienteNodoId2;
 
     public AdventureNode(){};
     public AdventureNode(int id, String texto, String GPS, String titulo, int siguienteNodoId1, int siguienteNodoId2) {
@@ -19,8 +19,8 @@ public class AdventureNode implements Serializable{
         this.texto = texto;
         this.GPS = GPS;
         this.titulo = titulo;
-        SiguienteNodoId1 = siguienteNodoId1;
-        SiguienteNodoId2 = siguienteNodoId2;
+        this.siguienteNodoId1 = siguienteNodoId1;
+        this.siguienteNodoId2 = siguienteNodoId2;
     }
 
     public int getId() {
@@ -57,18 +57,18 @@ public class AdventureNode implements Serializable{
 
     public int getSiguienteNodoId1() {
 
-        return SiguienteNodoId1;
+        return siguienteNodoId1;
     }
 
     public void setSiguienteNodoId1(int siguienteNodoId1) {
-        this.SiguienteNodoId1 = siguienteNodoId1;
+        this.siguienteNodoId1 = siguienteNodoId1;
     }
 
     public int getSiguienteNodoId2() {
-        return SiguienteNodoId2;
+        return siguienteNodoId2;
     }
 
     public void setSiguienteNodoId2(int siguienteNodoId2) {
-        this.SiguienteNodoId2 = siguienteNodoId2;
+        this.siguienteNodoId2 = siguienteNodoId2;
     }
 }

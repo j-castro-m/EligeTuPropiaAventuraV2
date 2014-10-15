@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
     @Override
-    public String addAdventureNodeToHistory(String player, int idNode, String nameAdventure) {
+    public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure) {
         ParseQuery<ParseObject > query = ParseQuery.getQuery("Historic");
         String identifier = "0";
         ParseObject historicParse = new ParseObject("Historic");
@@ -33,7 +33,7 @@ public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
         historicParse.put("adventureName", nameAdventure);
         historicParse.put("idNode", idNode);
         historicParse.saveInBackground();
-        return identifier;
+        //return identifier;
     }
 
     @Override
