@@ -30,7 +30,7 @@ public class DAOFactory {
     static int SQLITEDAO = 2;
     static int PARSEDAO = 3;
 
-    int SELECTED = FAKE_DAO;
+    int SELECTED = SQLITEDAO;
 
     @Bean
     UserFakeDAO userFakeDAO;

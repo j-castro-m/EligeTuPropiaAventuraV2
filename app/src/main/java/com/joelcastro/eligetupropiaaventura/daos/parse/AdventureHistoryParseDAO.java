@@ -19,7 +19,7 @@ import java.util.List;
 @EBean
 public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
     @Override
-    public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure) {
+    public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure,String status) {
         ParseQuery<ParseObject > query = ParseQuery.getQuery("Historic");
         String identifier = "0";
         ParseObject historicParse = new ParseObject("Historic");
@@ -35,8 +35,41 @@ public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
         historicParse.put("idPlayer", player);
         historicParse.put("adventureName", nameAdventure);
         historicParse.put("idNode", idNode);
+        historicParse.put("status", status);
         historicParse.saveInBackground();
         //return identifier;
+    }
+
+    @Override
+    public void changeStatus(String player, String nameAdventure) {
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Historic");
+        query.whereMatches("idPlayer",player);
+        query.whereMatches("adventureName",nameAdventure);
+        query.whereMatches("status", "Searching");
+        try {
+            ParseObject usuario = query.getFirst();
+            for (ParseObject parseObject : query.find()) {
+                usuario.put("status","Found");
+                usuario.saveInBackground();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String checkStatus(String player, String nameAdventure) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Historic");
+        query.whereMatches("idPlayer",player)
+                .whereMatches("adventureName",nameAdventure)
+                .whereMatches("status","Searching");
+        try {
+            ParseObject history = query.getFirst();
+            return "Searching";
+        } catch (ParseException e) {
+            return "Found";
+        }
     }
 
     @Override

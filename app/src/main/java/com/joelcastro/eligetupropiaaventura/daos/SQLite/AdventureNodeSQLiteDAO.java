@@ -3,6 +3,7 @@ package com.joelcastro.eligetupropiaaventura.daos.SQLite;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.joelcastro.eligetupropiaaventura.daos.AdventureNodeDAO;
 import com.joelcastro.eligetupropiaaventura.models.AdventureNode;
@@ -29,7 +30,8 @@ public class AdventureNodeSQLiteDAO implements AdventureNodeDAO {
     @Override
     public AdventureNode getNodeFromId(int idNode) {
         SQLiteDatabase db = openHelper.getReadableDatabase();
-        Cursor query = db.rawQuery("SELECT * FROM "+openHelper.NODES_TABLE_NAME+" WHERE id='"+idNode+"'",null);
+        Log.d("QUERYSTRING", "SELECT * FROM " + openHelper.NODES_TABLE_NAME + " WHERE id=" + idNode);
+        Cursor query = db.rawQuery("SELECT * FROM "+openHelper.NODES_TABLE_NAME+" WHERE id="+idNode,null);
         query.moveToFirst();
         AdventureNode node = buildNodeFromCursor(query);
         query.close();
@@ -37,7 +39,7 @@ public class AdventureNodeSQLiteDAO implements AdventureNodeDAO {
         return node;
     }
 
-    protected AdventureNode buildNodeFromCursor(Cursor query) {
+    public AdventureNode buildNodeFromCursor(Cursor query) {
         AdventureNode node = new AdventureNode();
 
         node.setId(query.getInt(query.getColumnIndex("id")));

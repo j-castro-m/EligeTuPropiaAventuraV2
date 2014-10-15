@@ -32,7 +32,7 @@ public class UserParseDAO implements UserDAO{
         query.whereMatches("user",user);
         try {
             ParseObject usuario = query.getFirst();
-            usuario.put("usuario", usuario);
+            usuario.put("user", usuario);
             usuario.put("password", newPass);
 
             usuario.saveInBackground();

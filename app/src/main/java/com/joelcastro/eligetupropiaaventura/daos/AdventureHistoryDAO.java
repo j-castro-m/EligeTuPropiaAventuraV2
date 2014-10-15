@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface AdventureHistoryDAO {
 
-    public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure);
+    public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure,String status);
+    public void changeStatus(String player,String nameAdventure);
+    public String checkStatus(String player,String nameAdventure);
     public List<AdventureNode> getNodesFromAdventure(String player, String nameAdventure);
 }

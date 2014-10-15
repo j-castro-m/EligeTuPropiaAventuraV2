@@ -34,8 +34,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="30dp"
-        android:textColor="#ff2328ff"
-        android:text="Opcion elegida" />
+        android:textColor="#ff2328ff"/>
 
         <TextView
             android:id="@+id/nodeDescripcionOpcionElegida"
@@ -43,8 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textColor="#ff76a2d1"
-            android:textSize="20dp"
-            android:text="qwertyuiop` asdfghjkl  zxcvbasdfghj" />
+            android:textSize="20dp" />
 
         <Button
         android:id="@+id/nodeButtonMapa"

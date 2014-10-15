@@ -30,7 +30,7 @@ public class UserSQLiteDAO implements UserDAO {
         SQLiteDatabase db = openHelper.getReadableDatabase();
         Cursor query = db.rawQuery("SELECT * FROM "+openHelper.USER_TABLE_NAME+" WHERE user='"+user+"' AND password='"+pass+"'",null);
         query.moveToFirst();
-        if(query.getCount()>1)
+        if(query.getCount()>0)
         {
             query.close();
             return true;

@@ -17,8 +17,19 @@ import java.util.ListIterator;
 @EBean
 public class AdventureHistoryFakeDAO implements AdventureHistoryDAO {
     @Override
-    public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure) {
+    public void addAdventureNodeToHistory(String player, int idNode, String nameAdventure,String status) {
 
+    }
+
+    @Override
+    public void changeStatus(String player, String nameAdventure) {
+
+    }
+
+    @Override
+    public String checkStatus(String player, String nameAdventure) {
+        //return "Searching";
+        return "Found";
     }
 
     @Override

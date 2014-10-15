@@ -88,9 +88,6 @@ public class HistorySummaryFragment extends ListFragment {
         List<AdventureNode> lista = adventureHistoryDAO.getNodesFromAdventure(myPrefs.user().get(),myPrefs.adventureName().get());
 
         if(lista.size()>1) {
-            ListIterator<AdventureNode> listIterator = lista.listIterator();
-            ListIterator<AdventureNode> listIteratorForNextNode = lista.listIterator(1);
-            Log.d("LISTA", lista.toString());
 
 
             for (int iteratorList = 0; iteratorList < lista.size() - 1; iteratorList++) {
@@ -98,7 +95,6 @@ public class HistorySummaryFragment extends ListFragment {
                 summaryListadoHash.put(TAG_TEXTO, lista.get(iteratorList).getTexto());
                 summaryListadoHash.put(TAG_OPCION, lista.get(iteratorList + 1).getTitulo());
                 summaryList.add(summaryListadoHash);
-                Log.d("HASH", summaryListadoHash.toString());
             }
         }
 

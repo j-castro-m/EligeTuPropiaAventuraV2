@@ -6,35 +6,62 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.joelcastro.eligetupropiaaventura.R;
+import com.joelcastro.eligetupropiaaventura.daos.AdventureHistoryDAO;
+import com.joelcastro.eligetupropiaaventura.daos.AdventureNodeDAO;
+import com.joelcastro.eligetupropiaaventura.daos.DAOFactory;
+import com.joelcastro.eligetupropiaaventura.models.AdventureNode;
+import com.joelcastro.eligetupropiaaventura.utils.MyPrefs_;
 
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
+
+import java.util.List;
 
 @EFragment(R.layout.fragment_history_node)
 public class HistoryNodeFragment extends Fragment {
 
-    private static final String TAG_ID ="id";
-    private static final String TAG_TITULO="titulo";
-    private static final String TAG_TEXTO="texto";
-    private static final String TAG_OPCION1NAME="opcion1Nombre";
-    private static final String TAG_OPCION1TEXTO="opcion1Texto";
-    private static final String TAG_OPCION1GPS="opcion1GPS";
-    private static final String TAG_OPCION2NAME="opcion2Nombre";
-    private static final String TAG_OPCION2TEXTO="opcion2Texto";
-    private static final String TAG_OPCION2GPS="opcion2GPS";
-    private static final String TAG_OPCION_ELEGIDA="opcionElegida";
-    private static final String TAG_OPCION_ELEGIDADESCRIPCION="opcionElegidaDescripcion";
-    private static final String TAG_OPCION_ELEGIDAGPS="opcionElegidaGPS";
 
     public static final String ARG_ID = "idHistoria";
     private String idHistoria;
+    AdventureNode nodo;
+
+    @Pref
+    MyPrefs_ myPrefs;
+
+    @Bean
+    DAOFactory daoFactory;
+    AdventureHistoryDAO adventureHistoryDAO;
+    AdventureNodeDAO adventureNodeDAO;
+
+    @AfterInject
+    void initDAO(){
+        adventureHistoryDAO = daoFactory.getAdventureHistoryDAO();
+        adventureNodeDAO = daoFactory.getAdventureNodeDAO();
+        List<AdventureNode> listaNodos = adventureHistoryDAO.getNodesFromAdventure(myPrefs.user().get(),myPrefs.adventureName().get());
+        nodo = listaNodos.get(listaNodos.size()-1);
+    }
+
+
+    @ViewById(R.id.nodeTitle) TextView title;
+    @ViewById(R.id.nodeTexto) TextView text;
+    @ViewById(R.id.nodeOpcionElegida) TextView selectedOption;
+    @ViewById(R.id.nodeDescripcionOpcionElegida) TextView selectedOptionDescription;
+    @ViewById(R.id.nodeButtonMapa) Button getMapa;
 
     public HistoryNodeFragment() {
         // Required empty public constructor
@@ -48,63 +75,30 @@ public class HistoryNodeFragment extends Fragment {
         return fragment;
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            idHistoria = getArguments().getString(ARG_ID);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_node, container, false);
-    }
-
-    @Override
-    public void onViewCreated (View rootView,
-                               Bundle savedInstanceState){
-        //final PreferencesHelperBK ph = new PreferencesHelperBK(rootView.getContext());
-        final TextView title = (TextView) rootView.findViewById(R.id.nodeTitle);
-        final TextView text = (TextView) rootView.findViewById(R.id.nodeTexto);
-        final TextView selectedOption = (TextView) rootView.findViewById(R.id.nodeOpcionElegida);
-        final TextView selectedOptionDescription = (TextView) rootView.findViewById(R.id.nodeDescripcionOpcionElegida);
-        final Button getMapa = (Button) rootView.findViewById(R.id.nodeButtonMapa);
-
-
-/*
-        final String historyTitle = ph.GetPreferences(idHistoria+TAG_TITULO);
-        final String historyTexto = ph.GetPreferences(idHistoria+TAG_TEXTO);
-        final String historyOpcion1Name = ph.GetPreferences(idHistoria+TAG_OPCION1NAME);
-        final String historyOpcion1Texto = ph.GetPreferences(idHistoria+TAG_OPCION1TEXTO);
-        final String historyOpcion1GPS = ph.GetPreferences(idHistoria+TAG_OPCION1GPS);
-        final String historyOpcion2Name = ph.GetPreferences(idHistoria+TAG_OPCION2NAME);
-        final String historyOpcion2Texto = ph.GetPreferences(idHistoria+TAG_OPCION2TEXTO);
-        final String historyOpcion2GPS = ph.GetPreferences(idHistoria+TAG_OPCION2GPS);
-
-        if(ph.GetPreferences(idHistoria+TAG_OPCION_ELEGIDA)==""){
-            AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
-            builder.setMessage(historyTexto)
+    @AfterViews
+    void addTextValues() {
+        if((adventureHistoryDAO.checkStatus(
+                myPrefs.user().get(),
+                myPrefs.adventureName().get())
+        ).equals("Found")){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(nodo.getTexto())
                     .setCancelable(false)
-                    .setPositiveButton(historyOpcion1Name, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(adventureNodeDAO.getNodeFromId(nodo.getSiguienteNodoId1()).getTitulo(), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            ph.SavePreferences(idHistoria+TAG_OPCION_ELEGIDA,historyOpcion1Name);
-                            ph.SavePreferences(idHistoria + TAG_OPCION_ELEGIDAGPS, historyOpcion1GPS);
-                            ph.SavePreferences(idHistoria + TAG_OPCION_ELEGIDADESCRIPCION, historyOpcion1Texto);
-                            selectedOption.setText(historyOpcion1Name);
-                            selectedOptionDescription.setText(historyOpcion1Texto);
+                            adventureHistoryDAO.changeStatus(myPrefs.user().get(),myPrefs.adventureName().get());
+                            adventureHistoryDAO.addAdventureNodeToHistory(myPrefs.user().get(),nodo.getSiguienteNodoId1(),myPrefs.adventureName().get(),"Searching");
+                            title.setText(adventureNodeDAO.getNodeFromId(nodo.getSiguienteNodoId1()).getTitulo());
+                            text.setText(adventureNodeDAO.getNodeFromId(nodo.getSiguienteNodoId1()).getTexto());
+
                         }
                     })
-                    .setNegativeButton(historyOpcion2Name, new DialogInterface.OnClickListener() {
+                    .setNegativeButton(adventureNodeDAO.getNodeFromId(nodo.getSiguienteNodoId2()).getTitulo(), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            ph.SavePreferences(idHistoria + TAG_OPCION_ELEGIDA, historyOpcion2Name);
-                            ph.SavePreferences(idHistoria + TAG_OPCION_ELEGIDAGPS, historyOpcion2GPS);
-                            ph.SavePreferences(idHistoria + TAG_OPCION_ELEGIDADESCRIPCION, historyOpcion2Texto);
-                            selectedOption.setText(historyOpcion2Name);
-                            selectedOptionDescription.setText(historyOpcion2Texto);
+                            adventureHistoryDAO.changeStatus(myPrefs.user().get(),myPrefs.adventureName().get());
+                            adventureHistoryDAO.addAdventureNodeToHistory(myPrefs.user().get(),nodo.getSiguienteNodoId2(),myPrefs.adventureName().get(),"Searching");
+                            title.setText(adventureNodeDAO.getNodeFromId(nodo.getSiguienteNodoId2()).getTitulo());
+                            text.setText(adventureNodeDAO.getNodeFromId(nodo.getSiguienteNodoId2()).getTexto());
 
                         }
                     });
@@ -114,22 +108,33 @@ public class HistoryNodeFragment extends Fragment {
             AlertDialog alert = builder.create();
             alert.show();
 
+        }else{
+            title.setText(nodo.getTitulo());
+            text.setText(nodo.getTexto());
         }
-*/
 
-        getMapa.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String position[] = null;//ph.GetPreferences(idHistoria + TAG_OPCION_ELEGIDAGPS).split(",");
+        if (getArguments() != null) {
+            idHistoria = getArguments().getString(ARG_ID);
+        }
+        title.setText(nodo.getTitulo());//title.setText(historyTitle);
+        text.setText(nodo.getTexto());//text.setText(historyTexto);
+    }
+
+
+
+
+
+
+    @Click(value = R.id.nodeButtonMapa)
+    void doButtonEnter() {
+                String position[] = nodo.getGPS().split(",");
+                Log.d("GPSSS",nodo.getGPS());
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("geo:0,0?q=" + position[0] + "," + position[1]));
+                        Uri.parse("http://maps.google.com/maps?saddr=" + position[0] + "," + position[1]+"&daddr=" + position[0] + "," + position[1]));
+
                 startActivity(intent);
             }
-        });
 
-        title.setText("Titulo Historia");//title.setText(historyTitle);
-        text.setText("Texto Historia");//text.setText(historyTexto);
-        //selectedOption.setText(ph.GetPreferences(idHistoria+TAG_OPCION_ELEGIDA));
-        //selectedOptionDescription.setText(ph.GetPreferences(idHistoria + TAG_OPCION_ELEGIDADESCRIPCION));
 
     }
 
@@ -138,4 +143,4 @@ public class HistoryNodeFragment extends Fragment {
 
 
 
-}
+
