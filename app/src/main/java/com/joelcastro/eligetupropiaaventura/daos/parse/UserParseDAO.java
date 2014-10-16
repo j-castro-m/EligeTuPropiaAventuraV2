@@ -1,5 +1,7 @@
 package com.joelcastro.eligetupropiaaventura.daos.parse;
 
+import android.util.Log;
+
 import com.joelcastro.eligetupropiaaventura.daos.UserDAO;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -14,11 +16,17 @@ import org.androidannotations.annotations.EBean;
 public class UserParseDAO implements UserDAO{
     @Override
     public boolean checkUser(String user, String pass) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("usuarios");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Usuarios");
         query.whereMatches("user",user);
         try {
             ParseObject usuario = query.getFirst();
-            return true;
+            if(usuario.getString("password").equals(pass))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
         } catch (ParseException e) {
             return false;
         }
@@ -28,11 +36,12 @@ public class UserParseDAO implements UserDAO{
 
     @Override
     public void changePass(String user, String pass, String newPass) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("usuarios");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Usuarios");
         query.whereMatches("user",user);
+
         try {
             ParseObject usuario = query.getFirst();
-            usuario.put("user", usuario);
+            usuario.put("user", user);
             usuario.put("password", newPass);
 
             usuario.saveInBackground();

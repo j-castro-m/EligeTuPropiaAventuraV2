@@ -12,6 +12,6 @@ public class EligeTuPropiaAventura extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-        Parse.initialize(this, "odRjmri5FhKQFi2dQyh6hR8t4dyzRpRbEpTEae62", "NbaLF6n1NVUu01Zp4jnmRFumjMejXao5d92QQTCA");
+        Parse.initialize(this, "7RLzgjWr0hCQi2d7bvzOn5vUuOkvXGpZU4Dp6fOs", "NsiqMAoie3lC0TtfxYF5F5Sj0H4HZFVJNmayGSC0");
     }
 }

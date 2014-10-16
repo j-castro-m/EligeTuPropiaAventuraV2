@@ -18,8 +18,8 @@ public class AdventureNodeParseDAO implements AdventureNodeDAO {
     public AdventureNode getNodeFromId(int idNode) {
         AdventureNode adventureNode = new AdventureNode();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Adventures");
-        query.whereEqualTo("id", idNode);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Nodes");
+        query.whereEqualTo("idNode", idNode);
         try {
             for (ParseObject parseObject : query.find()) {
                 adventureNode.setId(idNode);

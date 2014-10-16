@@ -1,5 +1,7 @@
 package com.joelcastro.eligetupropiaaventura.daos.parse;
 
+import android.util.Log;
+
 import com.joelcastro.eligetupropiaaventura.daos.AdventureDAO;
 import com.joelcastro.eligetupropiaaventura.models.Adventure;
 import com.parse.ParseException;
@@ -20,7 +22,7 @@ public class AdventureParseDAO implements AdventureDAO{
     public List<Adventure> getAllAdventures() {
         List<Adventure> adventuresList = new ArrayList<Adventure>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("AdventuresList");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Adventures");
         try {
             for (ParseObject parseObject : query.find()) {
                 Adventure adventure = new Adventure();
@@ -63,7 +65,7 @@ public class AdventureParseDAO implements AdventureDAO{
 
     @Override
     public void delAdventureFromPlayer(String adventureName) {
-        ParseQuery<ParseObject > query = ParseQuery.getQuery("Adventures");
+        ParseQuery<ParseObject > query = ParseQuery.getQuery("AdventuresAndPlayerList");
         query.whereMatches("nombre",adventureName);
         try {
             if(!(query.getFirst()==null)){
@@ -82,10 +84,12 @@ public class AdventureParseDAO implements AdventureDAO{
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("AdventuresAndPlayerList");
         query.whereEqualTo("idplayer", idPlayer);
+        Log.d("PARSE QUERY", idPlayer);
         try {
             for (ParseObject parseObject : query.find()) {
                 Adventure adventure = new Adventure();
                 adventure.setNombre(parseObject.getString("nombre"));
+                Log.d("PARSE QUERY NOMBRE", parseObject.getString("nombre"));
                 adventure.setDescripcion(parseObject.getString("descripcion"));
                 adventure.setIdNodoInicial(parseObject.getInt("idnodoinicial"));
                 adventure.setIdNodoActual(parseObject.getInt("idnodoactual"));
@@ -93,6 +97,7 @@ public class AdventureParseDAO implements AdventureDAO{
             }
 
         } catch (ParseException e) {
+            Log.d("PARSE QUERY ERROR", e.getMessage());
             e.printStackTrace();
         }
 

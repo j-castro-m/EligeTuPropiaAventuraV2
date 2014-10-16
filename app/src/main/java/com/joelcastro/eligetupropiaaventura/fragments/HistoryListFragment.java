@@ -85,7 +85,7 @@ public class HistoryListFragment extends ListFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String idHistoria = adventureDAO.getAllAdventures().get(position).getNombre();
+                String idHistoria = adventureDAO.getAdventureListFromPlayer(myPrefs.user().get()).get(position).getNombre();
                 myPrefs.adventureName().put(idHistoria);
                 HistoryNodeFragment fragment = new HistoryNodeFragment_();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -104,8 +104,8 @@ public class HistoryListFragment extends ListFragment {
             @Override
             public  boolean onItemLongClick(AdapterView<?> parent, View view,
             int position, long id) {
-                adventureDAO.delAdventureFromPlayer(adventureDAO.getAllAdventures().get(position).getNombre());
-                String idHistoria = adventureDAO.getAllAdventures().get(0).getNombre();
+                adventureDAO.delAdventureFromPlayer(adventureDAO.getAdventureListFromPlayer(myPrefs.user().get()).get(position).getNombre());
+                String idHistoria = adventureDAO.getAdventureListFromPlayer(myPrefs.user().get()).get(0).getNombre();
                 myPrefs.adventureName().put(idHistoria);
                 HistoryListFragment fragment = new HistoryListFragment_();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

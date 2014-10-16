@@ -1,7 +1,6 @@
 package com.joelcastro.eligetupropiaaventura.daos.parse;
 
 import com.joelcastro.eligetupropiaaventura.daos.AdventureHistoryDAO;
-import com.joelcastro.eligetupropiaaventura.daos.AdventureNodeDAO;
 import com.joelcastro.eligetupropiaaventura.models.Adventure;
 import com.joelcastro.eligetupropiaaventura.models.AdventureNode;
 import com.parse.ParseException;
@@ -74,7 +73,7 @@ public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
 
     @Override
     public List<AdventureNode> getNodesFromAdventure(String player, String nameAdventure) {
-        AdventureNodeParseDAO nodeDAO = new AdventureNodeParseDAO();
+
         List<AdventureNode> adventureNodeList = new ArrayList<AdventureNode>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Historic");
@@ -82,7 +81,7 @@ public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
         query.whereEqualTo("adventureName", nameAdventure);
         try {
             for (ParseObject parseObject : query.find()) {
-                adventureNodeList.add(nodeDAO.getNodeFromId(parseObject.getInt("idNode")));
+                adventureNodeList.add(getNodeFromId(parseObject.getInt("idNode")));
             }
 
         } catch (ParseException e) {
@@ -90,5 +89,27 @@ public class AdventureHistoryParseDAO implements AdventureHistoryDAO {
         }
 
         return adventureNodeList;
+    }
+
+    private AdventureNode getNodeFromId(int idNode) {
+        AdventureNode adventureNode = new AdventureNode();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Nodes");
+        query.whereEqualTo("idNode", idNode);
+        try {
+            for (ParseObject parseObject : query.find()) {
+                adventureNode.setId(idNode);
+                adventureNode.setTexto(parseObject.getString("texto"));
+                adventureNode.setGPS(parseObject.getString("GPS"));
+                adventureNode.setTitulo(parseObject.getString("titulo"));
+                adventureNode.setSiguienteNodoId1(parseObject.getInt("SiguienteNodoId1"));
+                adventureNode.setSiguienteNodoId2(parseObject.getInt("SiguienteNodoId2"));
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return adventureNode;
     }
 }
